@@ -36,11 +36,11 @@ func (s *ServiceTestSuite) TestGetScoreboard() {
 	tests := []struct {
 		scenario string
 
-		sb     nba.Scoreboard
+		sb     nba.ScoreboardData
 		nbaErr error
 
 		expErr error
-		expRes nba.Scoreboard
+		expRes stats.Scoreboard
 	}{
 		{
 			scenario: "failed to fetch scoreboard from nba api",
@@ -49,8 +49,10 @@ func (s *ServiceTestSuite) TestGetScoreboard() {
 		},
 		{
 			scenario: "fetch scoreboard from nba api",
-			sb:       nba.Scoreboard{},
-			expRes:   nba.Scoreboard{},
+			sb:       nba.ScoreboardData{},
+			expRes: stats.Scoreboard{
+				Games: []stats.Game{},
+			},
 		},
 	}
 
@@ -83,11 +85,11 @@ func (s *ServiceTestSuite) TestGetBoxscore() {
 	tests := []struct {
 		scenario string
 
-		sb     nba.Boxscore
+		sb     nba.BoxscoreData
 		nbaErr error
 
 		expErr error
-		expRes nba.Boxscore
+		expRes stats.Boxscore
 	}{
 		{
 			scenario: "failed to fetch boxscore from nba api",
@@ -96,8 +98,15 @@ func (s *ServiceTestSuite) TestGetBoxscore() {
 		},
 		{
 			scenario: "fetch boxscore from nba api",
-			sb:       nba.Boxscore{},
-			expRes:   nba.Boxscore{},
+			sb:       nba.BoxscoreData{},
+			expRes: stats.Boxscore{
+				HomeTeam: stats.Team{
+					Players: []stats.Player{},
+				},
+				AwayTeam: stats.Team{
+					Players: []stats.Player{},
+				},
+			},
 		},
 	}
 
