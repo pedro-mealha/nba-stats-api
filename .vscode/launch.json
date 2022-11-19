@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run app",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "cmd/server",
+            "env" : {
+                "NBA_BASE_URL": "https://stats.nba.com",
+            }
+        }
+    ]
+}

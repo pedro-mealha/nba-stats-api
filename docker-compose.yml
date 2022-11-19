@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  nba-stats-api:
+    container_name: nba_stats_api
+    build: .
+    ports:
+      - "8080:8080"
