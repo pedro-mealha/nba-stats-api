@@ -5,3 +5,5 @@ services:
     build: .
     ports:
       - "8080:8080"
+    environment:
+      - NBA_BASE_URL=https://stats.nba.com

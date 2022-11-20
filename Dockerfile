@@ -1,10 +1,9 @@
 FROM golang:1.19-alpine AS builder
 
-RUN mkdir /app
 WORKDIR /app
-COPY . .
+COPY ./ ./
 
-RUN CGO_ENABLED=0 go build -o dist/app cmd/server/main.go
+RUN apk add --no-cache --update make && make build
 
 # ---
 
