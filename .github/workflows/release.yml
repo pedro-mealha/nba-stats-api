@@ -1,0 +1,54 @@
+name: Release
+# on:
+#   release:
+#     types: [published]
+
+on: [pull_request]
+
+jobs:
+  terraform:
+    name: Execute Terraform
+    runs-on: ubuntu-latest
+    environment: production
+
+    defaults:
+      run:
+        working-directory: configs/terraform
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ~1.0
+
+      - name: Terraform Init
+        run: terraform init -backend-config="conn_str=postgres://${{ secrets.TF_STATE_DB_USERNAME }}:${{ secrets.TF_STATE_DB_PASSWORD }}@${{ secrets.TF_STATE_DB_HOST }}:${{ secrets.TF_STATE_DB_PORT }}/${{ secrets.TF_STATE_DB_NAME }}?sslmode=disable"
+
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve -input=false
+        env:
+          TF_WORKSPACE: production
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    name: Deploy API
+    runs-on: ubuntu-latest
+    environment: production
+    needs: [build, terraform]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy api
+        run: |
+          flyctl deploy --now -a production-nba-stats-api \
+            -i ghcr.io/weneedthepoh/nba-stats-api:31ff1fd15dfc86dde2e8e4ac009c2db47e831a85 \
+            -e NBA_BASE_URL=https://stats.nba.com
