@@ -1,13 +1,5 @@
-MIGRATE_VERSION=v4.15.1
-
-# Determine platform
-PLATFORM := linux
-ifeq (Darwin, $(findstring Darwin, $(shell uname -a)))
-  PLATFORM = darwin
-endif
-
 build:
-	@CGO_ENABLED=0 go build -o "dist/app" cmd/server/main.go
+	@CGO_ENABLED=0 go build -ldflags "-s -w" -o "dist/app" github.com/WeNeedThePoh/nba-stats-api/cmd/server
 
 run:
 	go run cmd/server/main.go

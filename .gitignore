@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+.env
 
 # Test binary, built with `go test -c`
 *.test
@@ -17,3 +18,4 @@
 .vscode/*
 !.vscode/launch.json
 bin/
+configs/terraform/.terraform*
