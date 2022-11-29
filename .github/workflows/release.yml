@@ -1,9 +1,11 @@
 name: Release
-# on:
-#   release:
-#     types: [published]
+on:
+  release:
+    types: [published]
 
-on: [pull_request]
+env:
+  REGISTRY: ghcr.io
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
 jobs:
   terraform:
@@ -31,14 +33,14 @@ jobs:
         id: apply
         run: terraform apply -auto-approve -input=false
         env:
-          TF_WORKSPACE: production
+          TF_WORKSPACE: prod
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     name: Deploy API
     runs-on: ubuntu-latest
     environment: production
-    needs: [build, terraform]
+    needs: [terraform]
 
     steps:
       - name: Checkout repository
@@ -49,6 +51,6 @@ jobs:
 
       - name: Deploy api
         run: |
-          flyctl deploy --now -a production-nba-stats-api \
-            -i ghcr.io/weneedthepoh/nba-stats-api:31ff1fd15dfc86dde2e8e4ac009c2db47e831a85 \
+          flyctl deploy --now -a prod-nba-stats-api \
+            -i ${{ env.REGISTRY }}/weneedthepoh/nba-stats-api:${{ github.sha }} \
             -e NBA_BASE_URL=https://stats.nba.com

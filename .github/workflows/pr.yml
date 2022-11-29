@@ -58,9 +58,11 @@ jobs:
         env:
           TF_WORKSPACE: staging
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
       - name: Terraform Production Plan
         run: terraform plan -no-color
         env:
-          TF_WORKSPACE: production
+          TF_WORKSPACE: prod
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
