@@ -8,6 +8,8 @@ import (
 
 const (
 	gameDateFormat          = "2006-01-02"
+	gameTimeFormat          = "2006-01-02T15:04:05Z"
+	gameHourFormat          = "15:04 UTC"
 	NBA            LeagueID = "00"
 	WNBA           LeagueID = "10"
 )
@@ -15,6 +17,7 @@ const (
 type (
 	LeagueID string
 	GameDate time.Time
+	GameTime time.Time
 
 	GetScoreboardCommand struct {
 		Date     string
@@ -35,15 +38,17 @@ type (
 	}
 
 	Game struct {
-		ID       string `json:"gameId"`
-		HomeTeam Team   `json:"homeTeam"`
-		AwayTeam Team   `json:"awayTeam"`
+		ID       string   `json:"gameId"`
+		StartsAt GameTime `json:"gameTimeUTC"`
+		HomeTeam Team     `json:"homeTeam"`
+		AwayTeam Team     `json:"awayTeam"`
 	}
 
 	Team struct {
 		ID      int64    `json:"teamId"`
 		Name    string   `json:"teamName"`
 		Tricode string   `json:"teamTricode"`
+		Stats   Stats    `json:"statistics"`
 		Players []Player `json:"players"`
 	}
 
@@ -114,6 +119,36 @@ func (gd *GameDate) UnmarshalJSON(data []byte) error {
 	}
 
 	*gd = GameDate(parsed)
+
+	return nil
+}
+
+func (gt GameTime) String() string {
+	return time.Time(gt).String()
+}
+
+func (gt GameTime) MarshalJSON() ([]byte, error) {
+	stamp := fmt.Sprintf("\"%s\"", time.Time(gt).Format(gameHourFormat))
+
+	return []byte(stamp), nil
+}
+
+func (gt *GameTime) UnmarshalJSON(data []byte) error {
+	var str string
+	if err := json.Unmarshal(data, &str); err != nil {
+		return err
+	}
+
+	if str == "" || str == "null" {
+		return nil
+	}
+
+	parsed, err := time.Parse(gameTimeFormat, str)
+	if err != nil {
+		return err
+	}
+
+	*gt = GameTime(parsed)
 
 	return nil
 }
