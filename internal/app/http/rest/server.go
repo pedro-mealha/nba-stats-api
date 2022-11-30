@@ -6,6 +6,7 @@ import (
 	"github.com/WeNeedThePoh/nba-stats-api/internal/app/domain/stats"
 	"github.com/WeNeedThePoh/nba-stats-api/internal/app/gateway/nba"
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/cors"
 	"github.com/go-chi/render"
 	"go.opencensus.io/plugin/ochttp"
 	"go.opencensus.io/plugin/ochttp/propagation/b3"
@@ -25,6 +26,18 @@ func NewAPI(logger *zap.SugaredLogger, s stats.Provider) *API {
 // Routes exposes rest endpoints
 func (a *API) Routes() http.Handler {
 	r := chi.NewRouter()
+
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"https://*pedromealha.dev", "http://localhost*"},
+		AllowedMethods:   []string{"GET", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Content-Type"},
+		AllowCredentials: true,
+		MaxAge:           300,
+	}))
+
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Hello World!"))
+	})
 
 	r.Route("/stats", func(r chi.Router) {
 		r.Get("/scoreboard", a.getScoreboard)

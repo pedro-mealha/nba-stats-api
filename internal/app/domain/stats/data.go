@@ -11,9 +11,10 @@ type (
 	}
 
 	Game struct {
-		ID       string `json:"id"`
-		HomeTeam Team   `json:"home_team"`
-		AwayTeam Team   `json:"away_team"`
+		ID       string       `json:"id"`
+		StartsAt nba.GameTime `json:"starts_at"`
+		HomeTeam Team         `json:"home_team"`
+		AwayTeam Team         `json:"away_team"`
 	}
 
 	Boxscore struct {
@@ -26,6 +27,7 @@ type (
 		ID      int64    `json:"id"`
 		Name    string   `json:"name"`
 		Tricode string   `json:"tricode"`
+		Stats   Stats    `json:"stats"`
 		Players []Player `json:"players,omitempty"`
 	}
 
@@ -74,12 +76,14 @@ func NewBoxscore(bs nba.BoxscoreData) Boxscore {
 			ID:      bs.Boxscore.HomeTeam.ID,
 			Name:    bs.Boxscore.HomeTeam.Name,
 			Tricode: bs.Boxscore.HomeTeam.Tricode,
+			Stats:   Stats(bs.Boxscore.HomeTeam.Stats),
 			Players: addPlayers(bs.Boxscore.HomeTeam.Players),
 		},
 		AwayTeam: Team{
 			ID:      bs.Boxscore.AwayTeam.ID,
 			Name:    bs.Boxscore.AwayTeam.Name,
 			Tricode: bs.Boxscore.AwayTeam.Tricode,
+			Stats:   Stats(bs.Boxscore.AwayTeam.Stats),
 			Players: addPlayers(bs.Boxscore.AwayTeam.Players),
 		},
 	}
@@ -90,7 +94,8 @@ func addGames(gs []nba.Game) []Game {
 
 	for i, g := range gs {
 		gg[i] = Game{
-			ID: g.ID,
+			ID:       g.ID,
+			StartsAt: g.StartsAt,
 			HomeTeam: Team{
 				ID:      g.HomeTeam.ID,
 				Name:    g.HomeTeam.Name,
