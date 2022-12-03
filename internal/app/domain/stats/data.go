@@ -130,6 +130,10 @@ func addPlayers(ps []nba.Player) []Player {
 			Stats:     Stats(p.Stats),
 		}
 
+		pp[i].Stats.FGP = parsePercentages(pp[i].Stats.FGP)
+		pp[i].Stats.FTP = parsePercentages(pp[i].Stats.FTP)
+		pp[i].Stats.ThreeFGP = parsePercentages(pp[i].Stats.ThreeFGP)
+
 		pp[i].Stats.Minutes = parseMinutes(pp[i].Stats.Minutes)
 	}
 
@@ -143,4 +147,8 @@ func parseMinutes(min string) string {
 	}
 
 	return "00:00"
+}
+
+func parsePercentages(p float64) float64 {
+	return p * 100
 }
