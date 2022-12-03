@@ -65,7 +65,6 @@ type (
 	Player struct {
 		FirstName string `json:"firstName"`
 		LastName  string `json:"familyName"`
-		Slug      string `json:"playerSlug"`
 		Position  string `json:"position"`
 		Stats     Stats  `json:"statistics"`
 	}

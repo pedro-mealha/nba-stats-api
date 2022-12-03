@@ -7,7 +7,12 @@ import (
 	"github.com/WeNeedThePoh/nba-stats-api/internal/app/gateway/nba"
 )
 
-const minutesRegex = `(?:PT)(\d{2})(?:M)(\d{2})(?:\.\d{2}S)`
+const (
+	// Matches PT25M12.02S or PT04M05.00S
+	minutesRegex = `(?:PT)([1-9]{1}|(?:0))(\d{1})(?:M)(\d{2})(?:\.\d{2}S)`
+
+	zeroMins = "0:00"
+)
 
 type (
 	Scoreboard struct {
@@ -39,7 +44,6 @@ type (
 	Player struct {
 		FirstName string `json:"first_name"`
 		LastName  string `json:"last_name"`
-		Slug      string `json:"slug"`
 		Position  string `json:"position"`
 		Stats     Stats  `json:"stats"`
 	}
@@ -63,7 +67,7 @@ type (
 		BLK      int64   `json:"blk"`
 		TO       int64   `json:"to"`
 		FP       int64   `json:"pf"`
-		FD       int64   `json:"pd"`
+		FD       int64   `json:"fd"`
 		PT       int64   `json:"pts"`
 	}
 )
@@ -125,7 +129,6 @@ func addPlayers(ps []nba.Player) []Player {
 		pp[i] = Player{
 			FirstName: p.FirstName,
 			LastName:  p.LastName,
-			Slug:      p.Slug,
 			Position:  p.Position,
 			Stats:     Stats(p.Stats),
 		}
@@ -143,10 +146,14 @@ func addPlayers(ps []nba.Player) []Player {
 func parseMinutes(min string) string {
 	re := regexp.MustCompile(minutesRegex)
 	if match := re.FindStringSubmatch(min); len(match) > 0 {
-		return fmt.Sprintf("%s:%s", match[1], match[2])
+		if match[1] == "0" {
+			match[1] = ""
+		}
+
+		return fmt.Sprintf("%s%s:%s", match[1], match[2], match[3])
 	}
 
-	return "00:00"
+	return zeroMins
 }
 
 func parsePercentages(p float64) float64 {
