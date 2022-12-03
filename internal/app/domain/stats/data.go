@@ -1,8 +1,13 @@
 package stats
 
 import (
+	"fmt"
+	"regexp"
+
 	"github.com/WeNeedThePoh/nba-stats-api/internal/app/gateway/nba"
 )
+
+const minutesRegex = `(?:PT)(\d{2})(?:M)(\d{2})(?:\.\d{2}S)`
 
 type (
 	Scoreboard struct {
@@ -124,7 +129,18 @@ func addPlayers(ps []nba.Player) []Player {
 			Position:  p.Position,
 			Stats:     Stats(p.Stats),
 		}
+
+		pp[i].Stats.Minutes = parseMinutes(pp[i].Stats.Minutes)
 	}
 
 	return pp
+}
+
+func parseMinutes(min string) string {
+	re := regexp.MustCompile(minutesRegex)
+	if match := re.FindStringSubmatch(min); len(match) > 0 {
+		return fmt.Sprintf("%s:%s", match[1], match[2])
+	}
+
+	return "00:00"
 }
