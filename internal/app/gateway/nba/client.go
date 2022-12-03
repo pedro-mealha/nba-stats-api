@@ -20,13 +20,14 @@ type (
 	// Client is the NBA API client
 	Client struct {
 		baseURL string
+		cdnURL  string
 		client  httpClient
 	}
 )
 
 // New creates a new instance of Client
-func New(client httpClient, baseURL string) *Client {
-	return &Client{baseURL: baseURL, client: client}
+func New(client httpClient, baseURL, cdnURL string) *Client {
+	return &Client{baseURL: baseURL, cdnURL: cdnURL, client: client}
 }
 
 // GetScoreboard get scoreboard for a specific day
@@ -66,21 +67,12 @@ func (c *Client) GetBoxscore(ctx context.Context, cmd GetBoxscoreCommand) (Boxsc
 	req, err := http.NewRequestWithContext(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("%s/stats/boxscoretraditionalv3", c.baseURL),
+		fmt.Sprintf("%s/static/json/liveData/boxscore/boxscore_%s.json", c.cdnURL, cmd.GameID),
 		nil,
 	)
 	if err != nil {
 		return BoxscoreData{}, err
 	}
-
-	q := req.URL.Query()
-	q.Set("gameId", cmd.GameID)
-	q.Set("startPeriod", "1")
-	q.Set("endPeriod", "14")
-	q.Set("startRange", "0")
-	q.Set("endRange", "28800")
-	q.Set("RangeType", "0")
-	req.URL.RawQuery = q.Encode()
 
 	resp, err := c.doRequest(req)
 	if err != nil {

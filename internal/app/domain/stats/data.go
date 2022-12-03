@@ -58,6 +58,7 @@ type (
 		BLK      int64   `json:"blk"`
 		TO       int64   `json:"to"`
 		FP       int64   `json:"pf"`
+		FD       int64   `json:"pd"`
 		PT       int64   `json:"pts"`
 	}
 )

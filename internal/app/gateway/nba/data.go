@@ -53,7 +53,7 @@ type (
 	}
 
 	BoxscoreData struct {
-		Boxscore Boxscore `json:"boxScoreTraditional"`
+		Boxscore Boxscore `json:"game"`
 	}
 
 	Boxscore struct {
@@ -89,6 +89,7 @@ type (
 		BLK      int64   `json:"blocks"`
 		TO       int64   `json:"turnovers"`
 		FP       int64   `json:"foulsPersonal"`
+		FD       int64   `json:"foulsDrawn"`
 		PT       int64   `json:"points"`
 	}
 )

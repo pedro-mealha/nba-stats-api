@@ -31,8 +31,9 @@ type (
 			ShutdownTimeout time.Duration `split_words:"true" default:"30s"`
 		}
 		NBA struct {
-			BaseURL string        `split_words:"true" required:"true"`
-			Timeout time.Duration `default:"120s"`
+			CDNBaseURL string        `split_words:"true" required:"true"`
+			BaseURL    string        `split_words:"true" required:"true"`
+			Timeout    time.Duration `default:"120s"`
 		}
 	}
 
@@ -77,7 +78,7 @@ func run(ctx context.Context, logger *zap.SugaredLogger) error {
 	// =========================================================================
 	var (
 		nbaClient = gateway.NewClientWithTimeout(cfg.NBA.Timeout)
-		n         = nba.New(nbaClient, cfg.NBA.BaseURL)
+		n         = nba.New(nbaClient, cfg.NBA.BaseURL, cfg.NBA.CDNBaseURL)
 	)
 
 	// =========================================================================
@@ -152,9 +153,9 @@ func newSignal(ctx context.Context, signals ...os.Signal) *Notifier {
 
 // listenToSignal is a blocking statement that listens to two channels:
 //
-// - s.sig: is the os.Signal that will the triggered by the signal.Notify once
-//          the expected signals are executed by the OS in the service
-// - ctx.Done(): in case of close of context, the service should also shutdown
+//   - s.sig: is the os.Signal that will the triggered by the signal.Notify once
+//     the expected signals are executed by the OS in the service
+//   - ctx.Done(): in case of close of context, the service should also shutdown
 func (s *Notifier) listenToSignal(ctx context.Context) {
 	for {
 		select {
