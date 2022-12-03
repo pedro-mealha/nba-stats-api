@@ -58,10 +58,12 @@ type (
 		RO       int64   `json:"oreb"`
 		RD       int64   `json:"dreb"`
 		RT       int64   `json:"reb"`
+		RTeam    int64   `json:"rebt"`
 		AST      int64   `json:"ast"`
 		STL      int64   `json:"stl"`
 		BLK      int64   `json:"blk"`
 		TO       int64   `json:"to"`
+		TOT      int64   `json:"tot"`
 		FP       int64   `json:"pf"`
 		FD       int64   `json:"pd"`
 		PT       int64   `json:"pts"`
@@ -76,23 +78,25 @@ func NewScoreboard(sb nba.ScoreboardData) Scoreboard {
 }
 
 func NewBoxscore(bs nba.BoxscoreData) Boxscore {
-	return Boxscore{
+	b := Boxscore{
 		GameID: bs.Boxscore.ID,
 		HomeTeam: Team{
 			ID:      bs.Boxscore.HomeTeam.ID,
 			Name:    bs.Boxscore.HomeTeam.Name,
 			Tricode: bs.Boxscore.HomeTeam.Tricode,
-			Stats:   Stats(bs.Boxscore.HomeTeam.Stats),
+			Stats:   statsDecorator(bs.Boxscore.HomeTeam.Stats),
 			Players: addPlayers(bs.Boxscore.HomeTeam.Players),
 		},
 		AwayTeam: Team{
 			ID:      bs.Boxscore.AwayTeam.ID,
 			Name:    bs.Boxscore.AwayTeam.Name,
 			Tricode: bs.Boxscore.AwayTeam.Tricode,
-			Stats:   Stats(bs.Boxscore.AwayTeam.Stats),
+			Stats:   statsDecorator(bs.Boxscore.AwayTeam.Stats),
 			Players: addPlayers(bs.Boxscore.AwayTeam.Players),
 		},
 	}
+
+	return b
 }
 
 func addGames(gs []nba.Game) []Game {
@@ -127,14 +131,8 @@ func addPlayers(ps []nba.Player) []Player {
 			LastName:  p.LastName,
 			Slug:      p.Slug,
 			Position:  p.Position,
-			Stats:     Stats(p.Stats),
+			Stats:     statsDecorator(p.Stats),
 		}
-
-		pp[i].Stats.FGP = parsePercentages(pp[i].Stats.FGP)
-		pp[i].Stats.FTP = parsePercentages(pp[i].Stats.FTP)
-		pp[i].Stats.ThreeFGP = parsePercentages(pp[i].Stats.ThreeFGP)
-
-		pp[i].Stats.Minutes = parseMinutes(pp[i].Stats.Minutes)
 	}
 
 	return pp
@@ -151,4 +149,16 @@ func parseMinutes(min string) string {
 
 func parsePercentages(p float64) float64 {
 	return p * 100
+}
+
+func statsDecorator(s nba.Stats) Stats {
+	sts := Stats(s)
+
+	sts.FGP = parsePercentages(sts.FGP)
+	sts.FTP = parsePercentages(sts.FTP)
+	sts.ThreeFGP = parsePercentages(sts.ThreeFGP)
+
+	sts.Minutes = parseMinutes(sts.Minutes)
+
+	return sts
 }

@@ -84,10 +84,12 @@ type (
 		RO       int64   `json:"reboundsOffensive"`
 		RD       int64   `json:"reboundsDefensive"`
 		RT       int64   `json:"reboundsTotal"`
+		RTeam    int64   `json:"reboundsTeam"`
 		AST      int64   `json:"assists"`
 		STL      int64   `json:"steals"`
 		BLK      int64   `json:"blocks"`
 		TO       int64   `json:"turnovers"`
+		TOT      int64   `json:"turnoversTeam"`
 		FP       int64   `json:"foulsPersonal"`
 		FD       int64   `json:"foulsDrawn"`
 		PT       int64   `json:"points"`
