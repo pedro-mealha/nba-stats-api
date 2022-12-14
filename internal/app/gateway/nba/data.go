@@ -70,28 +70,29 @@ type (
 	}
 
 	Stats struct {
-		Minutes  string  `json:"minutes"`
-		FGM      int64   `json:"fieldGoalsMade"`
-		FGA      int64   `json:"fieldGoalsAttempted"`
-		FGP      float64 `json:"fieldGoalsPercentage"`
-		ThreeFGM int64   `json:"threePointersMade"`
-		ThreeFGA int64   `json:"threePointersAttempted"`
-		ThreeFGP float64 `json:"threePointersPercentage"`
-		FTM      int64   `json:"freeThrowsMade"`
-		FTA      int64   `json:"freeThrowsAttempted"`
-		FTP      float64 `json:"freeThrowsPercentage"`
-		RO       int64   `json:"reboundsOffensive"`
-		RD       int64   `json:"reboundsDefensive"`
-		RT       int64   `json:"reboundsTotal"`
-		RTeam    int64   `json:"reboundsTeam"`
-		AST      int64   `json:"assists"`
-		STL      int64   `json:"steals"`
-		BLK      int64   `json:"blocks"`
-		TO       int64   `json:"turnovers"`
-		TOT      int64   `json:"turnoversTeam"`
-		FP       int64   `json:"foulsPersonal"`
-		FD       int64   `json:"foulsDrawn"`
-		PT       int64   `json:"points"`
+		Minutes   string  `json:"minutes"`
+		FGM       int64   `json:"fieldGoalsMade"`
+		FGA       int64   `json:"fieldGoalsAttempted"`
+		FGP       float64 `json:"fieldGoalsPercentage"`
+		ThreeFGM  int64   `json:"threePointersMade"`
+		ThreeFGA  int64   `json:"threePointersAttempted"`
+		ThreeFGP  float64 `json:"threePointersPercentage"`
+		FTM       int64   `json:"freeThrowsMade"`
+		FTA       int64   `json:"freeThrowsAttempted"`
+		FTP       float64 `json:"freeThrowsPercentage"`
+		RO        int64   `json:"reboundsOffensive"`
+		RD        int64   `json:"reboundsDefensive"`
+		RT        int64   `json:"reboundsTotal"`
+		RTeam     int64   `json:"reboundsTeam"`
+		AST       int64   `json:"assists"`
+		STL       int64   `json:"steals"`
+		BLK       int64   `json:"blocks"`
+		TO        int64   `json:"turnovers"`
+		TOT       int64   `json:"turnoversTeam"`
+		FP        int64   `json:"foulsPersonal"`
+		FD        int64   `json:"foulsDrawn"`
+		PT        int64   `json:"points"`
+		PlusMinus float64 `json:"plusMinusPoints"`
 	}
 )
 
