@@ -49,28 +49,29 @@ type (
 	}
 
 	Stats struct {
-		Minutes  string  `json:"min"`
-		FGM      int64   `json:"fgm"`
-		FGA      int64   `json:"fga"`
-		FGP      float64 `json:"fgp"`
-		ThreeFGM int64   `json:"3fgm"`
-		ThreeFGA int64   `json:"3fga"`
-		ThreeFGP float64 `json:"3fgp"`
-		FTM      int64   `json:"ftm"`
-		FTA      int64   `json:"fta"`
-		FTP      float64 `json:"ftp"`
-		RO       int64   `json:"oreb"`
-		RD       int64   `json:"dreb"`
-		RT       int64   `json:"reb"`
-		RTeam    int64   `json:"rebt"`
-		AST      int64   `json:"ast"`
-		STL      int64   `json:"stl"`
-		BLK      int64   `json:"blk"`
-		TO       int64   `json:"to"`
-		TOT      int64   `json:"tot"`
-		FP       int64   `json:"pf"`
-		FD       int64   `json:"fd"`
-		PT       int64   `json:"pts"`
+		Minutes   string  `json:"min"`
+		FGM       int64   `json:"fgm"`
+		FGA       int64   `json:"fga"`
+		FGP       float64 `json:"fgp"`
+		ThreeFGM  int64   `json:"3fgm"`
+		ThreeFGA  int64   `json:"3fga"`
+		ThreeFGP  float64 `json:"3fgp"`
+		FTM       int64   `json:"ftm"`
+		FTA       int64   `json:"fta"`
+		FTP       float64 `json:"ftp"`
+		RO        int64   `json:"oreb"`
+		RD        int64   `json:"dreb"`
+		RT        int64   `json:"reb"`
+		RTeam     int64   `json:"rebt"`
+		AST       int64   `json:"ast"`
+		STL       int64   `json:"stl"`
+		BLK       int64   `json:"blk"`
+		TO        int64   `json:"to"`
+		TOT       int64   `json:"tot"`
+		FP        int64   `json:"pf"`
+		FD        int64   `json:"fd"`
+		PT        int64   `json:"pts"`
+		PlusMinus float64 `json:"plus_minus"`
 	}
 )
 
