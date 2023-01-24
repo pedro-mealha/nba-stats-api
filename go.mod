@@ -4,13 +4,13 @@ go 1.19
 
 require (
 	github.com/go-chi/chi/v5 v5.0.7
-	github.com/go-chi/render v1.0.2
 	github.com/go-chi/cors v1.2.1
+	github.com/go-chi/render v1.0.2
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/relistan/rubberneck v1.3.0
 	github.com/stretchr/testify v1.8.1
 	go.opencensus.io v0.24.0
-	go.uber.org/zap v1.23.0
+	go.uber.org/zap v1.24.0
 )
 
 require (
