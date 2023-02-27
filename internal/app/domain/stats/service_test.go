@@ -85,8 +85,8 @@ func (s *ServiceTestSuite) TestGetBoxscore() {
 	tests := []struct {
 		scenario string
 
-		sb     nba.BoxscoreData
-		nbaErr error
+		nbaData nba.BoxscoreData
+		nbaErr  error
 
 		expErr error
 		expRes stats.Boxscore
@@ -98,12 +98,18 @@ func (s *ServiceTestSuite) TestGetBoxscore() {
 		},
 		{
 			scenario: "fetch boxscore from nba api",
-			sb:       nba.BoxscoreData{},
+			nbaData:  nba.BoxscoreData{},
 			expRes: stats.Boxscore{
 				HomeTeam: stats.Team{
+					Stats: stats.Stats{
+						Minutes: "0:00",
+					},
 					Players: []stats.Player{},
 				},
 				AwayTeam: stats.Team{
+					Stats: stats.Stats{
+						Minutes: "0:00",
+					},
 					Players: []stats.Player{},
 				},
 			},
@@ -124,7 +130,7 @@ func (s *ServiceTestSuite) TestGetBoxscore() {
 				}
 			)
 
-			s.nm.On("GetBoxscore", ctx, cmd).Return(tt.sb, tt.nbaErr)
+			s.nm.On("GetBoxscore", ctx, cmd).Return(tt.nbaData, tt.nbaErr)
 
 			res, err := s.s.GetBoxscore(ctx, cmd)
 
