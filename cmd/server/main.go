@@ -10,11 +10,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/WeNeedThePoh/nba-stats-api/internal/app/domain/stats"
-	"github.com/WeNeedThePoh/nba-stats-api/internal/app/gateway"
-	"github.com/WeNeedThePoh/nba-stats-api/internal/app/gateway/nba"
-	"github.com/WeNeedThePoh/nba-stats-api/internal/app/http/rest"
 	"github.com/kelseyhightower/envconfig"
+	"github.com/pedro-mealha/nba-stats-api/internal/app/domain/stats"
+	"github.com/pedro-mealha/nba-stats-api/internal/app/gateway"
+	"github.com/pedro-mealha/nba-stats-api/internal/app/gateway/nba"
+	"github.com/pedro-mealha/nba-stats-api/internal/app/http/rest"
 	"github.com/relistan/rubberneck"
 	"go.uber.org/zap"
 )

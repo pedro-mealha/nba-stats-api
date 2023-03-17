@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/WeNeedThePoh/nba-stats-api/internal/app/domain/stats"
-	"github.com/WeNeedThePoh/nba-stats-api/internal/app/gateway/nba"
+	"github.com/pedro-mealha/nba-stats-api/internal/app/domain/stats"
+	"github.com/pedro-mealha/nba-stats-api/internal/app/gateway/nba"
 	"github.com/stretchr/testify/suite"
 )
 

@@ -10,6 +10,7 @@ permissions:
 
 env:
   REGISTRY: ghcr.io
+  REPO_OWNER: ${{ github.repository_owner }}
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
 jobs:
@@ -45,7 +46,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/weneedthepoh/nba-stats-api
+          images: ${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/nba-stats-api
           tags: type=sha,event=branch,format=long,prefix=
 
       - name: Build and push Docker image
@@ -113,6 +114,6 @@ jobs:
       - name: Deploy api
         run: |
           flyctl deploy --now -a staging-nba-stats-api \
-            -i ${{ env.REGISTRY }}/weneedthepoh/nba-stats-api:${{ github.sha }} \
+            -i ${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/nba-stats-api:${{ github.sha }} \
             -e NBA_BASE_URL=https://stats.nba.com \
             -e NBA_CDN_BASE_URL=https://cdn.nba.com

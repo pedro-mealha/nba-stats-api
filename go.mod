@@ -1,4 +1,4 @@
-module github.com/WeNeedThePoh/nba-stats-api
+module github.com/pedro-mealha/nba-stats-api
 
 go 1.20
 

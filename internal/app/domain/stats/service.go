@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/WeNeedThePoh/nba-stats-api/internal/app/gateway/nba"
+	"github.com/pedro-mealha/nba-stats-api/internal/app/gateway/nba"
 )
 
 type (
