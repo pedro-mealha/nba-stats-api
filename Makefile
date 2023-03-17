@@ -1,5 +1,5 @@
 build:
-	@CGO_ENABLED=0 go build -ldflags "-s -w" -o "dist/app" github.com/WeNeedThePoh/nba-stats-api/cmd/server
+	@CGO_ENABLED=0 go build -ldflags "-s -w" -o "dist/app" github.com/pedro-mealha/nba-stats-api/cmd/server
 
 run:
 	go run cmd/server/main.go

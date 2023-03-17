@@ -3,11 +3,11 @@ package rest
 import (
 	"net/http"
 
-	"github.com/WeNeedThePoh/nba-stats-api/internal/app/domain/stats"
-	"github.com/WeNeedThePoh/nba-stats-api/internal/app/gateway/nba"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
 	"github.com/go-chi/render"
+	"github.com/pedro-mealha/nba-stats-api/internal/app/domain/stats"
+	"github.com/pedro-mealha/nba-stats-api/internal/app/gateway/nba"
 	"go.opencensus.io/plugin/ochttp"
 	"go.opencensus.io/plugin/ochttp/propagation/b3"
 	"go.uber.org/zap"
