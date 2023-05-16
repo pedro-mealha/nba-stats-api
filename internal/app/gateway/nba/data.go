@@ -26,6 +26,7 @@ type (
 
 	GetBoxscoreCommand struct {
 		GameID string
+		LeagueID LeagueID
 	}
 
 	ScoreboardData struct {

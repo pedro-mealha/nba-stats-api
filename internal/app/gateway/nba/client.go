@@ -19,15 +19,16 @@ type (
 
 	// Client is the NBA API client
 	Client struct {
-		baseURL string
-		cdnURL  string
-		client  httpClient
+		baseURL     string
+		cdnURL      string
+		wnbaCdnURL  string
+		client      httpClient
 	}
 )
 
 // New creates a new instance of Client
-func New(client httpClient, baseURL, cdnURL string) *Client {
-	return &Client{baseURL: baseURL, cdnURL: cdnURL, client: client}
+func New(client httpClient, baseURL, cdnURL, wnbaCdnURL string) *Client {
+	return &Client{baseURL: baseURL, cdnURL: cdnURL, client: client, wnbaCdnURL: wnbaCdnURL}
 }
 
 // GetScoreboard get scoreboard for a specific day
@@ -64,10 +65,15 @@ func (c *Client) GetScoreboard(ctx context.Context, cmd GetScoreboardCommand) (S
 
 // GetScoreboard get scoreboard for a specific day
 func (c *Client) GetBoxscore(ctx context.Context, cmd GetBoxscoreCommand) (BoxscoreData, error) {
+	cdnURL := c.cdnURL
+	if cmd.LeagueID == WNBA {
+		cdnURL = c.wnbaCdnURL
+	}
+
 	req, err := http.NewRequestWithContext(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("%s/static/json/liveData/boxscore/boxscore_%s.json", c.cdnURL, cmd.GameID),
+		fmt.Sprintf("%s/static/json/liveData/boxscore/boxscore_%s.json", cdnURL, cmd.GameID),
 		nil,
 	)
 	if err != nil {

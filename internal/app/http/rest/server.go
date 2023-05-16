@@ -78,6 +78,7 @@ func (a *API) getBoxscore(w http.ResponseWriter, r *http.Request) {
 	)
 
 	cmd.GameID = r.URL.Query().Get("gameId")
+	cmd.LeagueID = nba.ParseLeague(r.URL.Query().Get("league"))
 
 	res, err := a.s.GetBoxscore(ctx, cmd)
 	if err != nil {

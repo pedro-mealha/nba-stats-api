@@ -127,6 +127,7 @@ func (s *ServiceTestSuite) TestGetBoxscore() {
 
 				cmd = nba.GetBoxscoreCommand{
 					GameID: "005123512",
+					LeagueID: nba.WNBA,
 				}
 			)
 

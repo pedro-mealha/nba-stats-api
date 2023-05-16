@@ -10,6 +10,7 @@
             "env" : {
                 "NBA_BASE_URL": "https://stats.nba.com",
                 "NBA_CDN_BASE_URL": "https://cdn.nba.com",
+                "WNBA_CDN_BASE_URL": "https://cdn.wnba.com",
             }
         }
     ]
