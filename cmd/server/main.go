@@ -35,6 +35,10 @@ type (
 			BaseURL    string        `split_words:"true" required:"true"`
 			Timeout    time.Duration `default:"120s"`
 		}
+
+		WNBA struct {
+			CDNBaseURL string `split_words:"true" required:"true"`
+		}
 	}
 
 	// Notifier holds the context and channels to listen to the notifications
@@ -78,7 +82,7 @@ func run(ctx context.Context, logger *zap.SugaredLogger) error {
 	// =========================================================================
 	var (
 		nbaClient = gateway.NewClientWithTimeout(cfg.NBA.Timeout)
-		n         = nba.New(nbaClient, cfg.NBA.BaseURL, cfg.NBA.CDNBaseURL)
+		n         = nba.New(nbaClient, cfg.NBA.BaseURL, cfg.NBA.CDNBaseURL, cfg.WNBA.CDNBaseURL)
 	)
 
 	// =========================================================================

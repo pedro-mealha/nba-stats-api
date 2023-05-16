@@ -116,4 +116,5 @@ jobs:
           flyctl deploy --now -a staging-nba-stats-api \
             -i ${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/nba-stats-api:${{ github.sha }} \
             -e NBA_BASE_URL=https://stats.nba.com \
-            -e NBA_CDN_BASE_URL=https://cdn.nba.com
+            -e NBA_CDN_BASE_URL=https://cdn.nba.com \
+            -e WNBA_CDN_BASE_URL=https://cdn.wnba.com
