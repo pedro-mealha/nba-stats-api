@@ -8,7 +8,7 @@ require (
 	github.com/go-chi/render v1.0.2
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/relistan/rubberneck v1.3.0
-	github.com/stretchr/testify v1.8.2
+	github.com/stretchr/testify v1.8.3
 	go.opencensus.io v0.24.0
 	go.uber.org/zap v1.24.0
 )
