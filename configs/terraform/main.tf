@@ -8,12 +8,6 @@ resource "fly_app" "nba_stats_api" {
   org  = "personal"
 }
 
-resource "fly_ip" "nba_stats_api_ip" {
-  app        = local.app_name
-  type       = "v4"
-  depends_on = [fly_app.nba_stats_api]
-}
-
 resource "fly_ip" "nba_stats_api_ip_v6" {
   app        = local.app_name
   type       = "v6"
