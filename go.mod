@@ -3,7 +3,7 @@ module github.com/pedro-mealha/nba-stats-api
 go 1.21
 
 require (
-	github.com/go-chi/chi/v5 v5.0.12
+	github.com/go-chi/chi/v5 v5.0.14
 	github.com/go-chi/cors v1.2.1
 	github.com/go-chi/render v1.0.3
 	github.com/kelseyhightower/envconfig v1.4.0
