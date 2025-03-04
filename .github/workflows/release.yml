@@ -22,6 +22,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ~1.0
+
       # The public facing IP for the database is ipv6, GH does not support connecting to ipv6 addresses so we need this as a workaround.
       - name: Setup WARP
         run: |
@@ -39,11 +44,6 @@ jobs:
             sudo warp-cli --accept-tos tunnel ip add-range 0.0.0.0/0
           fi
           sudo warp-cli --accept-tos connect
-
-      - name: Setup terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: ~1.0
 
       - name: Terraform Init
         run: terraform init -backend-config="conn_str=postgres://${{ secrets.TF_STATE_DB_USERNAME }}:${{ secrets.TF_STATE_DB_PASSWORD }}@${{ secrets.TF_STATE_DB_HOST }}:${{ secrets.TF_STATE_DB_PORT }}/${{ secrets.TF_STATE_DB_NAME }}?sslmode=disable"
