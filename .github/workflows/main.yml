@@ -71,7 +71,6 @@ jobs:
   terraform:
     name: Execute Terraform
     runs-on: ubuntu-latest
-    environment: staging
 
     defaults:
       run:
@@ -116,23 +115,23 @@ jobs:
           TF_WORKSPACE: staging
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  deploy:
-    name: Deploy API
-    runs-on: ubuntu-latest
-    environment: staging
-    needs: [build, terraform]
+  # deploy:
+  #   name: Deploy API
+  #   runs-on: ubuntu-latest
+  #   environment: staging
+  #   needs: [build, terraform]
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
 
-      - name: Setup flyctl
-        uses: superfly/flyctl-actions/setup-flyctl@master
+  #     - name: Setup flyctl
+  #       uses: superfly/flyctl-actions/setup-flyctl@master
 
-      - name: Deploy api
-        run: |
-          flyctl deploy --now -a staging-nba-stats-api \
-            -i ${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/nba-stats-api:${{ github.sha }} \
-            -e NBA_BASE_URL=https://stats.nba.com \
-            -e NBA_CDN_BASE_URL=https://cdn.nba.com \
-            -e WNBA_CDN_BASE_URL=https://cdn.wnba.com
+  #     - name: Deploy api
+  #       run: |
+  #         flyctl deploy --now -a staging-nba-stats-api \
+  #           -i ${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/nba-stats-api:${{ github.sha }} \
+  #           -e NBA_BASE_URL=https://stats.nba.com \
+  #           -e NBA_CDN_BASE_URL=https://cdn.nba.com \
+  #           -e WNBA_CDN_BASE_URL=https://cdn.wnba.com
