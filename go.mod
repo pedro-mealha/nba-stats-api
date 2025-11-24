@@ -10,7 +10,7 @@ require (
 	github.com/relistan/rubberneck v1.3.0
 	github.com/stretchr/testify v1.11.1
 	go.opencensus.io v0.24.0
-	go.uber.org/zap v1.27.0
+	go.uber.org/zap v1.27.1
 )
 
 require (
